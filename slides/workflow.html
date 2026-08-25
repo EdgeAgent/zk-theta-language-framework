@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  .slide-container { width: 1280px; min-height: 720px; background: #0d1016; color: #f6f7fb; font-family: Arial, sans-serif; padding: 62px 78px 0 78px; position: relative; }
+  .kicker { color: #35d0ba; font-size: 13px; letter-spacing: 3px; font-weight: 700; }
+  .title { font-family: Georgia, serif; font-size: 50px; margin-top: 18px; }
+  .title span { color: #ff7a00; }
+  .intro { color: #9da5b4; font-size: 16px; margin-top: 14px; max-width: 800px; }
+  .workflow-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 36px; border-top: 1px solid #3a404c; }
+  .agent-col { border-right: 1px solid #303642; padding: 24px 20px 0 20px; min-height: 360px; }
+  .agent-col:last-child { border-right: none; }
+  .agent-num { font-family: Georgia, serif; font-size: 24px; color: #9d72ff; margin-bottom: 12px; }
+  .agent-name { font-size: 22px; font-weight: 700; color: #ff7a00; margin-bottom: 10px; }
+  .agent-goal { font-size: 15px; line-height: 1.4; color: #d6d9e0; margin-bottom: 18px; }
+  .output-box { border: 1px solid #3a404c; padding: 14px; background: #171a22; }
+  .output-label { font-size: 11px; letter-spacing: 1px; color: #6f7787; margin-bottom: 8px; text-transform: uppercase; }
+  .output-val { font-size: 14px; color: #f6f7fb; font-family: monospace; }
+  .gate { color: #35d0ba; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="slide-container">
+  <div class="kicker">MULTI-AGENT PIPELINE</div>
+  <div class="title">SafeRelease <span>Workflow</span></div>
+  <div class="intro">A reference implementation showing explicit handoffs, evidence collection, and policy-gated promotion.</div>
+  
+  <div class="workflow-grid">
+    <div class="agent-col">
+      <div class="agent-num">01</div>
+      <div class="agent-name">Planner</div>
+      <div class="agent-goal">Turns a release request into an ordered execution plan.</div>
+      <div class="output-box">
+        <div class="output-label">Output</div>
+        <div class="output-val">ExecutionPlan {<br>&nbsp;&nbsp;checks: ["ci", "sec"]<br>}</div>
+      </div>
+    </div>
+    <div class="agent-col">
+      <div class="agent-num">02</div>
+      <div class="agent-name">Researcher</div>
+      <div class="agent-goal">Collects independent CI, security, and window evidence.</div>
+      <div class="output-box">
+        <div class="output-label">Assertion</div>
+        <div class="output-val gate">assert ci.green<br>assert sec.pass</div>
+      </div>
+    </div>
+    <div class="agent-col">
+      <div class="agent-num">03</div>
+      <div class="agent-name">Verifier</div>
+      <div class="agent-goal">Validates evidence and produces a promotion receipt.</div>
+      <div class="output-box">
+        <div class="output-label">Receipt</div>
+        <div class="output-val">VerificationReceipt {<br>&nbsp;&nbsp;decision: "eligible"<br>}</div>
+      </div>
+    </div>
+    <div class="agent-col">
+      <div class="agent-num">04</div>
+      <div class="agent-name">Promoter</div>
+      <div class="agent-goal">Performs the action only after a valid receipt and approval.</div>
+      <div class="output-box">
+        <div class="output-label">Policy Gate</div>
+        <div class="output-val gate">await approval<br>promote.run()</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

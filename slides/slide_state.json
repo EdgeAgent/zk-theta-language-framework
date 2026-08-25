@@ -1,0 +1,134 @@
+{
+  "project_info": {
+    "title": "ZK Theta Language",
+    "created": 1787663802.255,
+    "last_updated": 1787663966.218,
+    "total_slides": 12
+  },
+  "slides": [
+    {
+      "id": "cover",
+      "state": "edited",
+      "pageNum": 1
+    },
+    {
+      "id": "problem",
+      "state": "edited",
+      "pageNum": 2
+    },
+    {
+      "id": "pillars",
+      "state": "edited",
+      "pageNum": 3
+    },
+    {
+      "id": "architecture",
+      "state": "edited",
+      "pageNum": 4
+    },
+    {
+      "id": "workflow",
+      "state": "edited",
+      "pageNum": 5
+    },
+    {
+      "id": "syntax",
+      "state": "edited",
+      "pageNum": 6
+    },
+    {
+      "id": "lifecycle",
+      "state": "edited",
+      "pageNum": 7
+    },
+    {
+      "id": "stark_pipeline",
+      "state": "edited",
+      "pageNum": 8
+    },
+    {
+      "id": "fri",
+      "state": "edited",
+      "pageNum": 9
+    },
+    {
+      "id": "security",
+      "state": "edited",
+      "pageNum": 10
+    },
+    {
+      "id": "roadmap",
+      "state": "edited",
+      "pageNum": 11
+    },
+    {
+      "id": "join",
+      "state": "edited",
+      "pageNum": 12
+    }
+  ],
+  "outline": [
+    {
+      "id": "cover",
+      "title": "ZK Theta Language",
+      "summary": "Developer AI Agent Framework. Typed intent, policy-gated execution, evidence-bound memory, and observable workflows. Include the title icon and proposal badges.",
+      "image_plan": "/home/ubuntu/zk-theta-framework/assets/zk-theta-icon.png - ZK Theta icon as the hero visual on title slide"
+    },
+    {
+      "id": "problem",
+      "title": "Why a language layer for agents?",
+      "summary": "Explain why model-plus-tool systems need explicit contracts for intent, permissions, evidence, and replayability."
+    },
+    {
+      "id": "pillars",
+      "title": "Six framework pillars",
+      "summary": "Present intent-first syntax, typed tool contracts, policy-native execution, evidence-bound memory, evaluation loops, and deployment observability."
+    },
+    {
+      "id": "architecture",
+      "title": "System architecture",
+      "summary": "Show how the agent runtime connects to policy, evidence memory, typed tools, external systems, observability, evaluation, and deployment control."
+    },
+    {
+      "id": "workflow",
+      "title": "SafeRelease multi-agent workflow",
+      "summary": "Show the Planner, Researcher, Verifier, and Promoter handoff sequence with explicit evidence and approval gates."
+    },
+    {
+      "id": "syntax",
+      "title": "Theta language anatomy",
+      "summary": "Show a compact .theta code sample with workflow, agent, policy, assert, approval, pipeline, and observe constructs."
+    },
+    {
+      "id": "lifecycle",
+      "title": "Runtime lifecycle",
+      "summary": "Explain the runtime loop from intent declaration through policy gate, typed tools, evidence commit, telemetry, and final receipt.",
+      "image_plan": "/home/ubuntu/zk-theta-framework/data/illustrative-targets.png - Reference implementation design targets bar chart fits the runtime/implementation overview"
+    },
+    {
+      "id": "stark_pipeline",
+      "title": "Proposed STARK-style integration",
+      "summary": "Map .theta source through typed IR, AIR-like constraints, execution trace, commitments, Fiat–Shamir, FRI queries, and proof receipt."
+    },
+    {
+      "id": "fri",
+      "title": "What FRI contributes",
+      "summary": "Explain FRI commit rounds, folding, Merkle openings, query rounds, and how low-degree testing connects to transition validity."
+    },
+    {
+      "id": "security",
+      "title": "Security boundary",
+      "summary": "Clarify the proposed cryptographic suite and why no primitive alone guarantees zero knowledge. Label current implementation limits."
+    },
+    {
+      "id": "roadmap",
+      "title": "Developer workflow and roadmap",
+      "summary": "Show the maturity path from instrumentation and typed tools to governance, evaluation, operations, and eventual proof backend."
+    },
+    {
+      "id": "join",
+      "title": "Join the proposal",
+      "summary": "Invite technical review and contributions to the private GitHub repository, with a clear proposed-specification status note."
+    }
+  ]
+}

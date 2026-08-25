@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+* { box-sizing: border-box; margin: 0; }
+.slide-container { width: 1280px; min-height: 720px; background: #0d1016; color: #f6f7fb; font-family: Arial, sans-serif; display: grid; grid-template-columns: 800px 1fr; gap: 0; padding: 62px 78px 24px 78px; position: relative; }
+.left { padding-top: 20px; }
+.right { border-left: 1px solid #303642; padding-left: 50px; padding-top: 20px; }
+.kicker { color: #35d0ba; font-size: 13px; letter-spacing: 3px; font-weight: 700; margin-bottom: 18px; }
+.title { font-family: Georgia, serif; font-size: 50px; line-height: 1.1; margin-bottom: 40px; }
+.title span { color: #ff7a00; }
+.arch-img { width: 700px; height: 420px; object-fit: contain; background: #171a22; border: 1px solid #3a404c; }
+.section-title { font-size: 18px; font-weight: 700; color: #ff963d; letter-spacing: 1px; margin-bottom: 16px; text-transform: uppercase; }
+.component { margin-bottom: 16px; }
+.comp-name { font-size: 20px; color: #f6f7fb; margin-bottom: 6px; }
+.comp-desc { font-size: 14px; color: #9da5b4; line-height: 1.4; }
+.violet { color: #9d72ff; }
+.teal { color: #35d0ba; }
+.footer { position: absolute; bottom: 30px; left: 78px; color: #6f7787; font-size: 12px; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+<div class="slide-container">
+    <div class="left">
+        <div class="kicker">SYSTEM TOPOLOGY</div>
+        <div class="title">The <span>Trust Boundary</span></div>
+        <img src="/home/ubuntu/zk-theta-framework/assets/architecture.png" class="arch-img" alt="ZK Theta System Architecture Diagram">
+    </div>
+    <div class="right">
+        <div class="section-title">Core Components</div>
+        <div class="component">
+            <div class="comp-name">Agent Runtime</div>
+            <div class="comp-desc">Flexible planning and state machine execution. Proposes actions based on intent.</div>
+        </div>
+        <div class="component">
+            <div class="comp-name violet">Policy Engine</div>
+            <div class="comp-desc">Deterministic enforcement of permissions, budgets, and environment-specific gates.</div>
+        </div>
+        <div class="component">
+            <div class="comp-name teal">Typed Tool Gateway</div>
+            <div class="comp-desc">Schema-driven external actions with built-in validation, retries, and audit identity.</div>
+        </div>
+        <div class="component">
+            <div class="comp-name">Evidence Memory</div>
+            <div class="comp-desc">Scoped context that preserves lineage and supports inclusion proofs for state transitions.</div>
+        </div>
+        <div class="component">
+            <div class="comp-name violet">Observability Plane</div>
+            <div class="comp-desc">Default emission of traces, costs, and audit events for operational management.</div>
+        </div>
+    </div>
+    <div class="footer">PROPOSED ARCHITECTURE · DETERMINISTIC CONTROL POINTS</div>
+</div>
+</body>
+</html>

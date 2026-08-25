@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background: #0d1016;
+        color: #f6f7fb;
+        font-family: Arial, sans-serif;
+        display: grid;
+        grid-template-columns: 2fr 3fr;
+        gap: 60px;
+        padding: 62px 78px 48px 78px;
+        position: relative;
+    }
+    .kicker { color: #35d0ba; font-size: 13px; letter-spacing: 3px; font-weight: 700; margin-bottom: 18px; }
+    .title { font-family: Georgia, serif; font-size: 48px; margin-bottom: 32px; }
+    .title span { color: #ff7a00; }
+    .loop-list { border-top: 1px solid #3a404c; }
+    .step {
+        display: flex;
+        gap: 15px;
+        padding: 10px 0;
+        border-bottom: 1px solid #1a1e26;
+        font-size: 15px;
+        line-height: 1.2;
+    }
+    .step-num { color: #9d72ff; font-weight: bold; min-width: 25px; }
+    .step-text { color: #d6d9e0; }
+    .right-col { display: flex; flex-direction: column; justify-content: flex-start; padding-top: 20px; }
+    .chart-container { border: 1px solid #303642; padding: 20px; background: #090c10; }
+    .chart-container img { width: 640px; height: 350px; object-fit: contain; }
+    .chart-label { font-size: 14px; color: #9da5b4; margin-top: 15px; line-height: 1.4; }
+    .footer-note { position: absolute; bottom: 30px; right: 78px; font-size: 11px; color: #6f7787; font-style: italic; }
+</style>
+</head>
+<body>
+<div class="slide-container">
+    <div class="left-col">
+        <div class="kicker">EXECUTION PIPELINE</div>
+        <h1 class="title">Runtime <span>lifecycle</span></h1>
+        <div class="loop-list">
+            <div class="step"><span class="step-num">01</span><span class="step-text">Declare intent and constraints</span></div>
+            <div class="step"><span class="step-num">02</span><span class="step-text">Compile contracts and schemas</span></div>
+            <div class="step"><span class="step-num">03</span><span class="step-text">Evaluate policy gates</span></div>
+            <div class="step"><span class="step-num">04</span><span class="step-text">Produce execution plan</span></div>
+            <div class="step"><span class="step-num">05</span><span class="step-text">Invoke typed tools</span></div>
+            <div class="step"><span class="step-num">06</span><span class="step-text">Validate tool results</span></div>
+            <div class="step"><span class="step-num">07</span><span class="step-text">Commit evidence to scoped memory</span></div>
+            <div class="step"><span class="step-num">08</span><span class="step-text">Emit trace and audit events</span></div>
+            <div class="step"><span class="step-num">09</span><span class="step-text">Verify success criteria</span></div>
+            <div class="step"><span class="step-num">10</span><span class="step-text">Return receipt and replay record</span></div>
+        </div>
+    </div>
+    <div class="right-col">
+        <div class="chart-container">
+            <img src="/home/ubuntu/zk-theta-framework/data/illustrative-targets.png" alt="ZK Theta design targets chart">
+        </div>
+        <div class="chart-label">
+            <strong>Design Targets:</strong> The framework aims for high policy coverage and typed-tool integrity. These targets guide the reference implementation and evaluation suites.
+        </div>
+    </div>
+    <div class="footer-note">
+        *Illustrative targets for evaluation planning; not measured production results.
+    </div>
+</div>
+</body>
+</html>

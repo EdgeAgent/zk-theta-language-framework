@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background: #0d1016;
+        color: #f6f7fb;
+        font-family: 'Courier New', Courier, monospace;
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 0;
+        padding: 60px 60px 10px 60px; /* reduced bottom & side padding to save vertical space */
+    }
+    .left-col {
+        padding-right: 40px; /* reduced */
+        border-right: 1px solid #303642;
+    }
+    .right-col {
+        padding-left: 40px; /* reduced */
+        font-family: Arial, sans-serif;
+    }
+    .kicker {
+        font-family: Arial, sans-serif;
+        color: #35d0ba;
+        font-size: 13px;
+        letter-spacing: 3px;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+    .title {
+        font-family: Georgia, serif;
+        font-size: 48px;
+        margin-bottom: 40px; /* keep title spacing unchanged */
+        color: #f6f7fb;
+    }
+    .title span { color: #ff7a00; }
+    
+    .code-block {
+        background: #161b22;
+        padding: 12px; /* reduced from 30px */
+        border: 1px solid #303642;
+        font-size: 18px;
+        line-height: 1.5;
+        color: #d6d9e0;
+        white-space: pre-wrap;
+    }
+    .keyword { color: #ff7a00; font-weight: bold; }
+    .string { color: #35d0ba; }
+    .comment { color: #6f7787; }
+    .type { color: #9d72ff; }
+
+    .construct-list {
+        margin-top: 8px; /* reduced */
+    }
+    .construct-item {
+        padding-top: 12px; /* reduced */
+        border-top: 1px solid #303642;
+        margin-top: 12px; /* reduced */
+    }
+    .construct-item:first-child {
+        border-top: none;
+        padding-top: 0;
+        margin-top: 0;
+    }
+    .c-name {
+        font-size: 20px;
+        font-weight: bold;
+        color: #ff963d;
+        margin-bottom: 6px; /* reduced */
+    }
+    .c-desc {
+        font-size: 16px;
+        line-height: 1.4;
+        color: #9da5b4;
+    }
+    .footer {
+        position: absolute;
+        bottom: 30px;
+        left: 80px;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        color: #6f7787;
+        letter-spacing: 1px;
+    }
+</style>
+</head>
+<body>
+<div class="slide-container">
+    <div class="left-col">
+        <div class="kicker">LANGUAGE ANATOMY</div>
+        <div class="title">The <span>.theta</span> syntax</div>
+        <div class="code-block">
+agent ReleasePilot { 
+  goal "prepare a safe release"
+  policy {
+    budget_usd <= 25
+    require_approval for deploy
+  }
+  tools {
+    deploy: Tool<Receipt> guarded
+  }
+  plan {
+    assert evidence.status == "green"
+    await approval("manager")
+    deploy.run(change)
+  }
+  observe { trace, costs, lineage }
+}
+        </div>
+    </div>
+    <div class="right-col">
+        <div class="construct-list">
+            <div class="construct-item">
+                <div class="c-name">agent & workflow</div>
+                <div class="c-desc">Defines the role, scope, and handoff boundaries for autonomous units.</div>
+            </div>
+            <div class="construct-item">
+                <div class="c-name">policy & guarded</div>
+                <div class="c-desc">Runtime obligations that block execution until constraints are satisfied.</div>
+            </div>
+            <div class="construct-item">
+                <div class="c-name">assert & await</div>
+                <div class="c-desc">Deterministic gates that turn evidence and human decisions into state transitions.</div>
+            </div>
+            <div class="construct-item">
+                <div class="c-name">observe</div>
+                <div class="c-desc">Declarative telemetry requirements for traces, costs, and evidence lineage.</div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">PROPOSED SPECIFICATION · NOT A FINALIZED COMPILER GRAMMAR</div>
+</div>
+</body>
+</html>

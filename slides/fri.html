@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    .slide-container { width: 1280px; min-height: 720px; background: #0d1016; color: #f6f7fb; font-family: Arial, sans-serif; padding: 62px 78px 0 78px; position: relative; }
+    .kicker { color: #35d0ba; font-size: 13px; letter-spacing: 3px; font-weight: 700; }
+    .title { font-family: Georgia, serif; font-size: 50px; margin-top: 18px; }
+    .title span { color: #ff7a00; }
+    .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-top: 50px; }
+    .col { padding-top: 10px; }
+    .col-right { border-left: 1px solid #303642; padding-left: 80px; }
+    .section-head { font-size: 20px; font-weight: bold; color: #ff963d; margin-bottom: 30px; letter-spacing: 1px; text-transform: uppercase; }
+    .item { margin-bottom: 36px; }
+    .item-title { font-size: 22px; color: #f6f7fb; margin-bottom: 8px; }
+    .item-desc { font-size: 15px; color: #9da5b4; line-height: 1.5; }
+    .violet { color: #9d72ff; }
+    .teal { color: #35d0ba; }
+    .connection-box { margin-top: 40px; border: 1px solid #ff7a00; padding: 24px; background: #1a1410; }
+    .connection-title { font-size: 16px; font-weight: bold; color: #ff7a00; margin-bottom: 8px; }
+    .connection-text { font-size: 14px; color: #d6d9e0; line-height: 1.4; }
+    .footer { position: absolute; bottom: 30px; left: 78px; color: #6f7787; font-size: 12px; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+<div class="slide-container">
+    <div class="kicker">LOW-DEGREE TESTING</div>
+    <div class="title">What <span>FRI</span> contributes</div>
+    
+    <div class="content-grid">
+        <div class="col">
+            <div class="section-head">Phase 1: Commit & Fold</div>
+            <div class="item">
+                <div class="item-title violet">Recursive Folding</div>
+                <div class="item-desc">The prover reduces a large polynomial claim into two claims of half the size, merged using verifier challenges.</div>
+            </div>
+            <div class="item">
+                <div class="item-title violet">Merkle Commitments</div>
+                <div class="item-desc">Each folded layer is committed via a Merkle root. This continues until the polynomial reaches a trivial constant degree.</div>
+            </div>
+            <div class="connection-box">
+                <div class="connection-title">The Proximity Guarantee</div>
+                <div class="connection-text">FRI proves that the committed evaluation vector is close to a low-degree Reed-Solomon codeword, preventing "hybrid codeword" attacks.</div>
+            </div>
+        </div>
+        
+        <div class="col col-right">
+            <div class="section-head">Phase 2: Query & Verify</div>
+            <div class="item">
+                <div class="item-title teal">Selective Openings</div>
+                <div class="item-desc">The verifier queries random positions in the evaluation domain, receiving values and their Merkle authentication paths.</div>
+            </div>
+            <div class="item">
+                <div class="item-title teal">Colinearity Checks</div>
+                <div class="item-desc">The verifier checks that the queried points across layers satisfy the algebraic folding relation derived from the challenges.</div>
+            </div>
+            <div class="item">
+                <div class="item-title teal">Transition Validity</div>
+                <div class="item-desc">By proving the low-degree property of the composition polynomial, FRI establishes that the AIR constraints hold across the trace.</div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">FAST REED-SOLOMON INTERACTIVE ORACLE PROOF OF PROXIMITY</div>
+</div>
+</body>
+</html>

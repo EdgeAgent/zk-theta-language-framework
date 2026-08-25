@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    .slide-container { width: 1280px; min-height: 720px; background: #0d1016; color: #f6f7fb; font-family: Arial, sans-serif; padding: 62px 78px 0 78px; position: relative; }
+    .kicker { color: #35d0ba; font-size: 13px; letter-spacing: 3px; font-weight: 700; }
+    .title { font-family: Georgia, serif; font-size: 50px; margin-top: 18px; }
+    .title span { color: #ff7a00; }
+    .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 40px; margin-top: 48px; }
+    .column-left { grid-column: 1 / span 2; border-right: 1px solid #303642; padding-top: 10px; }
+    .column-right { grid-column: 3 / span 3; padding-top: 10px; }
+    .step { margin-bottom: 32px; position: relative; padding-left: 40px; }
+    .step::before { content: ""; position: absolute; left: 0; top: 0; width: 24px; height: 24px; border: 1px solid #ff7a00; }
+    .step.violet::before { border-color: #9d72ff; }
+    .step.teal::before { border-color: #35d0ba; }
+    .step-num { position: absolute; left: 6px; top: 4px; font-size: 12px; color: #ff7a00; font-weight: bold; }
+    .step.violet .step-num { color: #9d72ff; }
+    .step.teal .step-num { color: #35d0ba; }
+    .step-title { font-size: 18px; font-weight: bold; margin-bottom: 6px; }
+    .step-desc { font-size: 14px; color: #9da5b4; line-height: 1.4; }
+    .pipeline-visual { margin-top: 20px; border: 1px solid #303642; padding: 24px; background: #161b22; }
+    .flow-item { display: inline-block; padding: 8px 12px; border: 1px solid #3a404c; font-size: 12px; margin: 4px; color: #d6d9e0; }
+    .arrow { color: #ff7a00; margin: 0 4px; font-size: 14px; }
+    .status-tag { position: absolute; top: 62px; right: 78px; border: 1px solid #ff7a00; color: #ff7a00; padding: 4px 12px; font-size: 12px; font-weight: bold; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+<div class="slide-container">
+    <div class="status-tag">PROPOSED ARCHITECTURE</div>
+    <div class="kicker">COMPILER & RUNTIME PIPELINE</div>
+    <div class="title">STARK-style <span>IOP/FRI Integration</span></div>
+    
+    <div class="grid">
+        <div class="column-left">
+            <div class="step">
+                <div class="step-num">01</div>
+                <div class="step-title">Theta Source to IR</div>
+                <div class="step-desc">Compile .theta into a typed agent IR with explicit event tags and state transitions.</div>
+            </div>
+            <div class="step">
+                <div class="step-num">02</div>
+                <div class="step-title">AIR Constraint Generation</div>
+                <div class="step-desc">Lower IR into Algebraic Intermediate Representation (AIR) transition and boundary constraints.</div>
+            </div>
+            <div class="step violet">
+                <div class="step-num">03</div>
+                <div class="step-title">Execution Trace</div>
+                <div class="step-desc">Runtime records a witness trace of agent cycles, tool results, and policy evaluations.</div>
+            </div>
+            <div class="step violet">
+                <div class="step-num">04</div>
+                <div class="step-title">Composition Polynomial</div>
+                <div class="step-desc">Combine constraints into a single composition polynomial for low-degree testing.</div>
+            </div>
+        </div>
+        
+        <div class="column-right">
+            <div class="step teal">
+                <div class="step-num">05</div>
+                <div class="step-title">Merkle Commitments</div>
+                <div class="step-desc">Commit to evaluation vectors of trace and composition polynomials via Merkle roots.</div>
+            </div>
+            <div class="step teal">
+                <div class="step-num">06</div>
+                <div class="step-title">Fiat-Shamir Transcript</div>
+                <div class="step-desc">Absorb commitments and public inputs to derive non-interactive verifier challenges.</div>
+            </div>
+            <div class="step">
+                <div class="step-num">07</div>
+                <div class="step-title">FRI Proximity Queries</div>
+                <div class="step-desc">Recursively fold codewords and open Merkle paths to prove low-degree proximity.</div>
+            </div>
+            <div class="step">
+                <div class="step-num">08</div>
+                <div class="step-title">Proof Receipt</div>
+                <div class="step-desc">Verify commitments, paths, and folding to issue a signed, observable proof receipt.</div>
+            </div>
+            
+            <div class="pipeline-visual">
+                <div class="flow-item">.theta</div> <span class="arrow">→</span>
+                <div class="flow-item">Typed IR</div> <span class="arrow">→</span>
+                <div class="flow-item">AIR</div> <span class="arrow">→</span>
+                <div class="flow-item">Trace</div> <span class="arrow">→</span>
+                <div class="flow-item">Commit</div> <span class="arrow">→</span>
+                <div class="flow-item">FRI</div> <span class="arrow">→</span>
+                <div class="flow-item">Proof</div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
