@@ -1,0 +1,81 @@
+{
+  "workflow": "SafeRelease",
+  "status": "success",
+  "event_count": 4,
+  "final_event_hash": "a47837f58f738c9a94915f7e051d83c2bdbf472a622a5b5838ad461c873cc7b7",
+  "evidence_digest": "4e506b253be4aa8a40deece48059907e9e6baf059da707e8e6276004d680c3cd",
+  "events": [
+    {
+      "timestamp": "2026-08-25T08:21:20.654346+00:00",
+      "agent": "Planner",
+      "action": "plan.created",
+      "payload": {
+        "checks": [
+          "ci",
+          "security",
+          "change-window"
+        ],
+        "evidence_required": 3,
+        "request": {
+          "service": "checkout-api",
+          "repository": "edge/checkout-api",
+          "commit": "a1b2c3d4",
+          "environment": "staging"
+        }
+      },
+      "previous_event": "GENESIS",
+      "event_hash": "f2743b7a10c7280ac55f516663dbb12de4ed9e9a292097a192bc5a95f4d7a8c2"
+    },
+    {
+      "timestamp": "2026-08-25T08:21:20.654403+00:00",
+      "agent": "Researcher",
+      "action": "evidence.collected",
+      "payload": {
+        "ci": {
+          "status": "green",
+          "commit": "a1b2c3d4"
+        },
+        "security": {
+          "status": "pass",
+          "commit": "a1b2c3d4"
+        },
+        "change_window": {
+          "open": true,
+          "service": "checkout-api"
+        }
+      },
+      "previous_event": "f2743b7a10c7280ac55f516663dbb12de4ed9e9a292097a192bc5a95f4d7a8c2",
+      "event_hash": "c2d4db7cc7fcc68a061a4395b2ccfa7e83fdd0886f4d09788ad493f38084cf00"
+    },
+    {
+      "timestamp": "2026-08-25T08:21:20.654422+00:00",
+      "agent": "Verifier",
+      "action": "verification.completed",
+      "payload": {
+        "decision": "eligible",
+        "evidence_digest": "4e506b253be4aa8a40deece48059907e9e6baf059da707e8e6276004d680c3cd"
+      },
+      "previous_event": "c2d4db7cc7fcc68a061a4395b2ccfa7e83fdd0886f4d09788ad493f38084cf00",
+      "event_hash": "9081e86d1b6ee044a2ec245c74915d174eff54710c2929cb3dabd33aaa6b34b7"
+    },
+    {
+      "timestamp": "2026-08-25T08:21:20.654428+00:00",
+      "agent": "Promoter",
+      "action": "promotion.completed",
+      "payload": {
+        "approval": {
+          "approver": "release-manager",
+          "approved": true
+        },
+        "promotion": {
+          "service": "checkout-api",
+          "commit": "a1b2c3d4",
+          "environment": "staging",
+          "status": "promoted"
+        }
+      },
+      "previous_event": "9081e86d1b6ee044a2ec245c74915d174eff54710c2929cb3dabd33aaa6b34b7",
+      "event_hash": "a47837f58f738c9a94915f7e051d83c2bdbf472a622a5b5838ad461c873cc7b7"
+    }
+  ]
+}

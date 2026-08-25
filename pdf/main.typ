@@ -171,6 +171,98 @@ The following chart is a planning aid for a reference implementation. It shows t
   caption: [Illustrative targets for evaluating a ZK Theta reference implementation.]
 )
 
+= Multi-agent workflow example
+
+ZK Theta is designed to make handoffs between specialized agents explicit. The example below defines a Planner, Researcher, Verifier, and Promoter. Each handoff carries structured state, and the final promotion is blocked until evidence assertions and an approval gate succeed.
+
+```theta
+workflow SafeRelease {
+  input request: ReleaseRequest
+  policy {
+    environment == "staging"
+    max_budget_usd <= 5
+    require_approval for promote
+  }
+
+  agent Planner {
+    goal "turn a release request into an ordered execution plan"
+    tools { read_request: Tool<ReleaseRequest> }
+    plan {
+      request = read_request.run()
+      return Plan { checks: ["ci", "security", "change-window"] }
+    }
+  }
+
+  agent Researcher {
+    goal "collect independent evidence for every release check"
+    tools { ci_report: Tool<CIReport>; security_report: Tool<SecurityReport>; change_window: Tool<ChangeWindow> }
+    plan {
+      ci = ci_report.run(request.repository)
+      security = security_report.run(request.commit)
+      window = change_window.run(request.service)
+      assert ci.status == "green"
+      assert security.status == "pass"
+      assert window.open == true
+      return EvidenceBundle { ci, security, window }
+    }
+  }
+
+  agent Verifier {
+    goal "validate evidence and produce a promotion receipt"
+    plan {
+      assert evidence.count == 3
+      return VerificationReceipt { decision: "eligible" }
+    }
+  }
+
+  agent Promoter {
+    goal "promote only after a valid verification receipt and approval"
+    tools { promote: Tool<PromotionReceipt> policy guarded }
+    plan {
+      assert verification.decision == "eligible"
+      await approval("release-manager")
+      return promote.run(request.service, request.commit)
+    }
+  }
+
+  pipeline {
+    request = Planner.run(input)
+    evidence = Researcher.run(request)
+    verification = Verifier.run(evidence)
+    result = Promoter.run(request, evidence, verification)
+  }
+}
+```
+
+The repository includes a standard-library Python reference runner for this workflow. It demonstrates execution, evidence assertions, explicit approval, and hash-linked audit receipts, but it is not a compiler for the proposed language and does not generate zero-knowledge proofs.
+
+= Cryptography and verification boundary
+
+ZK Theta does not currently implement a zero-knowledge proof system. The honest design answer is therefore that no cryptographic primitive in the current repository guarantees zero-knowledge verification. A future implementation would need a formally specified transition relation, a sound and zero-knowledge proof system, canonical serialization, secure transcript binding, and independent review.
+
+The proposed modular suite is as follows:
+
+#table(
+  columns: (1.4fr, 2fr, 2fr),
+  inset: 8pt,
+  stroke: 0.5pt + luma(205),
+  [*Component*], [*Proposed primitive*], [*Role*],
+  [Hashing], [SHA-256 or SHAKE256], [Domain-separated policy, transcript, state, and event digests.],
+  [State commitments], [Merkle trees over hashed events], [Commit to ordered evidence logs and prove inclusion.],
+  [Transition proof], [Transparent STARK-style IOP/FRI construction], [Prove a private witness satisfies the public state-transition relation without a trusted setup.],
+  [Non-interactive proof], [Fiat–Shamir transcript], [Derive verifier challenges from canonical commitments and public inputs.],
+  [Identity and approvals], [ML-DSA; Ed25519 only for a non-PQ prototype], [Authenticate tool manifests, approvals, and deployment receipts.],
+  [Confidential transport], [ML-KEM], [Establish keys for encrypted evidence or telemetry channels.],
+)
+
+A hash, signature, or key-encapsulation mechanism is not itself a zero-knowledge proof. Zero knowledge depends on the relation and the proof system’s formal security properties. The proposed STARK-style route is a design choice intended to avoid a trusted setup; a production team could select another proof family, but it would need to document its assumptions, soundness error, privacy property, setup model, field, recursion strategy, and implementation status.
+
+The verification flow is: compile the workflow into a relation and policy digest; serialize public inputs and private witness data canonically; commit to private state and ordered events; generate a non-interactive proof; authenticate the receipt and approval metadata; and then verify the proof, commitments, signatures, policy digest, and chain linkage. Private witness data must remain outside the public statement for privacy to hold.
+
+#block(width: 100%, fill: luma(245), inset: 12pt, radius: 4pt)[
+  *Security qualification.* The IRTF Fiat–Shamir document referenced here is an active Internet-Draft, not a final standard. NIST’s ML-KEM, ML-DSA, and SLH-DSA are post-quantum standards for key establishment and signatures; they do not by themselves prove an agent transition in zero knowledge.
+]
+
 = Repository reference layout
 
 A reference repository should keep the language proposal, executable examples, diagrams, and generated artifacts close together while preserving a clear path toward future compiler and runtime work.
@@ -223,5 +315,7 @@ This proposal is intentionally self-contained. The following standards and publi
 #enum(
   [National Institute of Standards and Technology, *AI Risk Management Framework (AI RMF 1.0)*, 2023. #link("https://www.nist.gov/itl/ai-risk-management-framework")[nist.gov/itl/ai-risk-management-framework].],
   [National Institute of Standards and Technology, *Secure Software Development Framework (SSDF)*, SP 800-218. #link("https://csrc.nist.gov/Projects/ssdf")[csrc.nist.gov/Projects/ssdf].],
-  [OpenTelemetry, *Documentation: Observability framework and telemetry concepts*. #link("https://opentelemetry.io/docs/")[opentelemetry.io/docs].],
+  [OpenTelemetry Documentation, *Observability framework documentation*. #link("https://opentelemetry.io/docs/")[opentelemetry.io/docs].],
+  [NIST, *Post-Quantum Cryptography Standards*. #link("https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards")[nist.gov].],
+  [IRTF, *Fiat–Shamir Transformation*, draft-irtf-cfrg-fiat-shamir-03. #link("https://datatracker.ietf.org/doc/draft-irtf-cfrg-fiat-shamir/")[datatracker.ietf.org].],
 )

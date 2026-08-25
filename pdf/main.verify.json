@@ -21,15 +21,15 @@
     {
       "name": "page-count",
       "status": "PASS",
-      "message": "pages=10",
+      "message": "pages=12",
       "evidence": {
-        "pages": 10
+        "pages": 12
       }
     },
     {
       "name": "text-presence",
       "status": "PASS",
-      "message": "characters=12693",
+      "message": "characters=17788",
       "evidence": {}
     },
     {

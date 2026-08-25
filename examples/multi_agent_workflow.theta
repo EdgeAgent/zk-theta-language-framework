@@ -1,0 +1,73 @@
+workflow SafeRelease {
+  input request: ReleaseRequest
+  policy {
+    environment == "staging"
+    max_budget_usd <= 5
+    require_approval for promote
+  }
+
+  agent Planner {
+    goal "turn a release request into an ordered execution plan"
+    tools { read_request: Tool<ReleaseRequest> }
+    plan {
+      request = read_request.run()
+      return Plan {
+        checks: ["ci", "security", "change-window"]
+        evidence_required: 3
+      }
+    }
+  }
+
+  agent Researcher {
+    goal "collect independent evidence for every release check"
+    tools {
+      ci_report: Tool<CIReport>
+      security_report: Tool<SecurityReport>
+      change_window: Tool<ChangeWindow>
+    }
+    plan {
+      ci = ci_report.run(request.repository)
+      security = security_report.run(request.commit)
+      window = change_window.run(request.service)
+      assert ci.status == "green"
+      assert security.status == "pass"
+      assert window.open == true
+      return EvidenceBundle { ci, security, window }
+    }
+  }
+
+  agent Verifier {
+    goal "validate evidence and produce a promotion receipt"
+    tools { hash_evidence: Tool<EvidenceDigest> }
+    plan {
+      digest = hash_evidence.run(evidence)
+      assert digest.count == 3
+      return VerificationReceipt {
+        decision: "eligible"
+        evidence_digest: digest.value
+      }
+    }
+  }
+
+  agent Promoter {
+    goal "promote only after a valid verification receipt and approval"
+    tools { promote: Tool<PromotionReceipt> policy guarded }
+    plan {
+      assert verification.decision == "eligible"
+      await approval("release-manager")
+      receipt = promote.run(request.service, request.commit)
+      return receipt
+    }
+  }
+
+  pipeline {
+    request = Planner.run(input)
+    evidence = Researcher.run(request)
+    verification = Verifier.run(evidence)
+    result = Promoter.run(request, evidence, verification)
+  }
+
+  observe {
+    trace, costs, policy_events, evidence_lineage, agent_handoffs
+  }
+}
