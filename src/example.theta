@@ -1,0 +1,24 @@
+agent ReleasePilot {
+  goal "prepare a safe production release"
+  constraints {
+    environment == "production"
+    budget_usd <= 25
+    require_approval for deploy
+  }
+
+  tools {
+    inspect_ci: Tool<BuildReport>
+    open_change: Tool<ChangeRequest>
+    deploy: Tool<DeploymentReceipt> policy guarded
+  }
+
+  plan {
+    evidence = inspect_ci.run()
+    assert evidence.status == "green"
+    change = open_change.create(evidence)
+    await approval("release-manager")
+    deploy.run(change)
+  }
+
+  observe { trace, costs, policy_events, evidence_lineage }
+}

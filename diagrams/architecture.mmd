@@ -1,0 +1,20 @@
+flowchart LR
+    U[Developer / Product Team] --> I[theta.intent\nGoal + constraints]
+    I --> A[Agent Runtime\nPlan + state machine]
+    A --> P[Policy Engine\nPermissions + approvals]
+    A --> M[Evidence Memory\nScoped context + lineage]
+    A --> T[Typed Tool Gateway\nSchemas + retries + timeouts]
+    T --> X[External Systems\nAPIs, data, code, services]
+    X --> T
+    T --> O[Observability Plane\nTraces + costs + audit events]
+    P --> O
+    M --> O
+    O --> E[Evaluation + Replay\nRegression suites]
+    E --> D[Deployment Control\nRelease + rollback]
+    D --> A
+    classDef core fill:#171a22,stroke:#ff7a00,color:#f6f7fb,stroke-width:2px;
+    classDef trust fill:#211b35,stroke:#9d72ff,color:#f6f7fb,stroke-width:2px;
+    classDef external fill:#17262a,stroke:#35d0ba,color:#f6f7fb,stroke-width:2px;
+    class I,A,T core;
+    class P,M,O,E,D trust;
+    class U,X external;

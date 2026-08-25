@@ -1,0 +1,19 @@
+flowchart TD
+    S[1. Declare intent] --> C[2. Compile contracts]
+    C --> G{3. Policy gate}
+    G -- blocked --> R[Explain, revise, or request approval]
+    G -- approved --> P[4. Produce execution plan]
+    P --> T[5. Call typed tool]
+    T --> V{6. Validate result}
+    V -- invalid --> F[Recover, retry, or escalate]
+    V -- valid --> M[7. Commit evidence to scoped memory]
+    M --> O[8. Emit trace, cost, and audit events]
+    O --> Q{9. Success criteria met?}
+    Q -- no --> P
+    Q -- yes --> Z[10. Return receipt and replay record]
+    classDef step fill:#171a22,stroke:#ff7a00,color:#f6f7fb,stroke-width:2px;
+    classDef decision fill:#211b35,stroke:#9d72ff,color:#f6f7fb,stroke-width:2px;
+    classDef terminal fill:#17262a,stroke:#35d0ba,color:#f6f7fb,stroke-width:2px;
+    class S,C,P,T,V,M,O,Q step;
+    class G,Q decision;
+    class R,F,Z terminal;
